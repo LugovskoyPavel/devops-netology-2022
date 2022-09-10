@@ -1,0 +1,60 @@
+Обязательная задача 1
+
+Ответ:
+Переменная	Значение	Обоснование
+c		a+b		a+b - в даном случае просто набор символов, которые присваиваются переменной с
+d		1+2		Bash воспринимает операцию как подстановку переменных a и b в строку  
+e		3		Правильно выполненная опеарция арифмитического сложения
+
+Обязательная задача 2
+
+Ответ:
+while (( 1 == 1 ))
+    do
+        curl https://localhost:4757
+        if (($? != 0))
+        then
+            date >> curl.log
+        break
+        fi
+    done
+
+Обязательная задача 3
+
+Ответ: 
+
+#!/usr/bin/env bash
+for i in {1..5}
+do
+   curl http://192.168.0.1
+   date >> text.log
+   curl http://173.194.222.113
+   date >> text.log
+   curl http://87.250.250.242
+   date >> text.log
+done
+
+Обязательная задача 4
+
+Ответ:
+#!/usr/bin/env bash
+spisok=(192.168.0.1 173.194.222.113 87.250.250.242)
+while ((1==1))
+do
+for i in ${spisok[@]}
+do
+    for ((j=0; j < 5; j++))
+    do
+    curl http://$i > text1.log
+    if ($? !=0)
+        then
+          echo $i is down > text1.log
+          break
+    fi
+    done
+done
+done
+
+
+
+
