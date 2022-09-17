@@ -36,26 +36,57 @@ for result in result_os.split('\n'):
 ```
 
 ### Ваш скрипт:
-```python
-???
+#!/usr/bin/env python3
+
+import os
+
+bash_command = ["cd ~/devops-netology-2022", "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+print(result_os)
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        print(prepare_result)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+vagrant@vagrant:~$ ./script1.sh
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+Добавил print, так как был нулевой ответ
 ```
 
 ## Обязательная задача 3
 1. Доработать скрипт выше так, чтобы он мог проверять не только локальный репозиторий в текущей директории, а также умел воспринимать путь к репозиторию, который мы передаём как входной параметр. Мы точно знаем, что начальство коварное и будет проверять работу этого скрипта в директориях, которые не являются локальными репозиториями.
 
 ### Ваш скрипт:
-```python
-???
+#!/usr/bin/env python3
+
+import os
+import sys
+
+param  = sys.argv[1]
+bash_command = ['cd '+param, "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        print(f'{param}/{prepare_result}')
+
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+
+vagrant@vagrant:~$ ./script1.sh sysadm-homeworks
+vagrant@vagrant:~$
+
+Результат - пустой
 ```
 
 ## Обязательная задача 4
