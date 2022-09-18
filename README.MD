@@ -36,6 +36,7 @@ for result in result_os.split('\n'):
 ```
 
 ### Ваш скрипт:
+```
 #!/usr/bin/env python3
 
 import os
