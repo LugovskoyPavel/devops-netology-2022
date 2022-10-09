@@ -1,1 +1,0 @@
-# devops-netology-2022
