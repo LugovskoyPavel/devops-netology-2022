@@ -76,13 +76,19 @@ file_centos.txt  term_f.txt
 
 exit
 lugy@lugy-virtual-machine:~$ sudo docker exec -it d5c98f582478 /bin/bash
+
 root@d5c98f582478:/# ls
+
 bin  boot  data  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+
 root@d5c98f582478:/# cd /data
+
 root@d5c98f582478:/data# ls -l
+
 total 8
 -rw-r--r-- 1 root root  8 Oct 11 09:48 file_centos.txt
 -rw-rw-r-- 1 1000 1000 14 Oct 11 09:20 term_f.txt
+
 root@d5c98f582478:/data# 
 
 
