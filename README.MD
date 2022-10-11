@@ -45,6 +45,36 @@
 Добавьте еще один файл в папку /data на хостовой машине;
 Подключитесь во второй контейнер и отобразите листинг и содержание файлов в /data контейнера.
 
+Ответ:
+lugy@lugy-virtual-machine:~$ sudo docker run -d -it -v "/home/lugy/data:/data" centos
+7451d90b1b4dd8bff95ecb2ab3a23920e824d4c6398520a506d6e304f0114a9a
+lugy@lugy-virtual-machine:~$ sudo docker run -d -it -v "/home/lugy/data:/data" debian
+d5c98f5824784eb19012512af6df2654babeded2873270ef40dcaf881598242d
+lugy@lugy-virtual-machine:~$ sudo docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS          PORTS                                   NAMES
+d5c98f582478   debian    "bash"                   39 seconds ago       Up 30 seconds                                           lucid_mclaren
+7451d90b1b4d   centos    "/bin/bash"              About a minute ago   Up 52 seconds                                           angry_feistel
+lugy@lugy-virtual-machine:~$ sudo docker exec -it 7451d90b1b4d /bin/bash
+[root@7451d90b1b4d /]# ls
+bin  data  dev	etc  home  lib	lib64  lost+found  media  mnt  opt  proc  root	run  sbin  srv	sys  tmp  usr  var
+[root@7451d90b1b4d /]# cd /data
+[root@7451d90b1b4d data]# vi file_centos.txt
+[root@7451d90b1b4d data]# ls
+file_centos.txt  term_f.txt
+[root@7451d90b1b4d data]# exit
+exit
+lugy@lugy-virtual-machine:~$ sudo docker exec -it d5c98f582478 /bin/bash
+root@d5c98f582478:/# ls
+bin  boot  data  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@d5c98f582478:/# cd /data
+root@d5c98f582478:/data# ls -l
+total 8
+-rw-r--r-- 1 root root  8 Oct 11 09:48 file_centos.txt
+-rw-rw-r-- 1 1000 1000 14 Oct 11 09:20 term_f.txt
+root@d5c98f582478:/data# 
+
+
+
 Задача 4 (*)
 Воспроизвести практическую часть лекции самостоятельно.
 
