@@ -55,13 +55,20 @@ CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS   
 d5c98f582478   debian    "bash"                   39 seconds ago       Up 30 seconds                                           lucid_mclaren
 7451d90b1b4d   centos    "/bin/bash"              About a minute ago   Up 52 seconds                                           angry_feistel
 lugy@lugy-virtual-machine:~$ sudo docker exec -it 7451d90b1b4d /bin/bash
+
 [root@7451d90b1b4d /]# ls
 bin  data  dev	etc  home  lib	lib64  lost+found  media  mnt  opt  proc  root	run  sbin  srv	sys  tmp  usr  var
+
 [root@7451d90b1b4d /]# cd /data
+
 [root@7451d90b1b4d data]# vi file_centos.txt
+
 [root@7451d90b1b4d data]# ls
+
 file_centos.txt  term_f.txt
+
 [root@7451d90b1b4d data]# exit
+
 exit
 lugy@lugy-virtual-machine:~$ sudo docker exec -it d5c98f582478 /bin/bash
 root@d5c98f582478:/# ls
@@ -75,10 +82,4 @@ root@d5c98f582478:/data#
 
 
 
-Задача 4 (*)
-Воспроизвести практическую часть лекции самостоятельно.
 
-Соберите Docker образ с Ansible, загрузите на Docker Hub и пришлите ссылку вместе с остальными ответами к задачам.
-
-Как cдавать задание
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
