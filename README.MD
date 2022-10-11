@@ -47,10 +47,15 @@
 
 Ответ:
 lugy@lugy-virtual-machine:~$ sudo docker run -d -it -v "/home/lugy/data:/data" centos
+
 7451d90b1b4dd8bff95ecb2ab3a23920e824d4c6398520a506d6e304f0114a9a
+
 lugy@lugy-virtual-machine:~$ sudo docker run -d -it -v "/home/lugy/data:/data" debian
+
 d5c98f5824784eb19012512af6df2654babeded2873270ef40dcaf881598242d
+
 lugy@lugy-virtual-machine:~$ sudo docker ps
+
 CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS          PORTS                                   NAMES
 d5c98f582478   debian    "bash"                   39 seconds ago       Up 30 seconds                                           lucid_mclaren
 7451d90b1b4d   centos    "/bin/bash"              About a minute ago   Up 52 seconds                                           angry_feistel
