@@ -5,8 +5,7 @@
 
 Приведите получившуюся команду или docker-compose манифест.
 
-Ответ: sudo docker run -d --name lugpg -p 3333:5432 -v my-postgres-data:/var/lib/postgresql/data \
--v my-postgres-backup:/var/lib/postgresql/backup postgres
+Ответ: sudo docker run --name lpspg -e POSTGRES_PASSWORD=21223 -p 5432:5432 -v my-postgres-data:/var/lib/postgresql/data -v my-postgres-backup:/var/lib/postgresql/backup -d postgres
 
 Задача 2
 В БД из задачи 1:
