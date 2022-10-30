@@ -5,6 +5,9 @@
 
 Приведите получившуюся команду или docker-compose манифест.
 
+Ответ: sudo docker run -d --name lugpg -p 3333:5432 -v my-postgres-data:/var/lib/postgresql/data \
+-v my-postgres-backup:/var/lib/postgresql/backup postgres
+
 Задача 2
 В БД из задачи 1:
 
