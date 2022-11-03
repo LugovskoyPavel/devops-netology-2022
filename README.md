@@ -39,7 +39,7 @@ SQL-запрос для выдачи списка пользователей с 
 Ответ: 
 
 test_db=# \l+
----------------------------------------------
+*
                                                                    List of databases
    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   |  Size   | Tablespace |                Description                 
 -----------+----------+----------+------------+------------+-----------------------+---------+------------+--------------------------------------------
@@ -50,7 +50,7 @@ test_db=# \l+
            |          |          |            |            | postgres=CTc/postgres |         |            | 
  test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |                       | 8097 kB | pg_default | 
 (4 rows)
--------------
+*
 
 test_db=# \d+ orders
                                                 Table "public.orders"
