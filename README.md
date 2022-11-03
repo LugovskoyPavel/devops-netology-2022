@@ -6,9 +6,10 @@
 Приведите получившуюся команду или docker-compose манифест.
 
 Ответ: 
+
 sudo docker run --name lpspg -e POSTGRES_PASSWORD=21223 -p 5432:5432 -v my-postgres-data:/var/lib/postgresql/data -v my-postgres-backup:/var/lib/postgresql/backup -d postgres
 
-----------------------------------------------------------------------------------------------------------------------------------------
+
 Задача 2
 В БД из задачи 1:
 
@@ -38,7 +39,7 @@ SQL-запрос для выдачи списка пользователей с 
 Ответ: 
 
 test_db=# \l+
-
+---------------------------------------------
                                                                    List of databases
    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   |  Size   | Tablespace |                Description                 
 -----------+----------+----------+------------+------------+-----------------------+---------+------------+--------------------------------------------
@@ -49,7 +50,7 @@ test_db=# \l+
            |          |          |            |            | postgres=CTc/postgres |         |            | 
  test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |                       | 8097 kB | pg_default | 
 (4 rows)
-
+-------------
 
 test_db=# \d+ orders
                                                 Table "public.orders"
