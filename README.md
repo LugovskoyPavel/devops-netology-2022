@@ -5,7 +5,9 @@
 
 Приведите получившуюся команду или docker-compose манифест.
 
-Ответ: sudo docker run --name lpspg -e POSTGRES_PASSWORD=21223 -p 5432:5432 -v my-postgres-data:/var/lib/postgresql/data -v my-postgres-backup:/var/lib/postgresql/backup -d postgres
+Ответ: 
+sudo docker run --name lpspg -e POSTGRES_PASSWORD=21223 -p 5432:5432 -v my-postgres-data:/var/lib/postgresql/data -v my-postgres-backup:/var/lib/postgresql/backup -d postgres
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 Задача 2
 В БД из задачи 1:
@@ -244,10 +246,16 @@ width — средний размер одной строки в байтах.
 
 Поднимите новый пустой контейнер с PostgreSQL.
 
-Ответ:
-
-
-
 Восстановите БД test_db в новом контейнере.
 
 Приведите список операций, который вы применяли для бэкапа данных и восстановления.
+
+Ответ
+
+root@91e88dbc21ec:~# pg_dump -U postgres test_db > /var/lib/postgresql/backup/dump1.sql - делаем бекап
+
+docker run --name backls -e POSTGRES_PASSWORD=21223 -p 5432:5432 -d postgres - запускаем новый контейнер
+
+psql -U postgres test_db -f /var/lib/postgresql/backup/dump1.sql - восстанавливаем бд в консоли
+
+
