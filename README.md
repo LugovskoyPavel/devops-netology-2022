@@ -6,7 +6,7 @@
 Приведите получившуюся команду или docker-compose манифест.
 
 Ответ: sudo docker run --name lpspg -e POSTGRES_PASSWORD=21223 -p 5432:5432 -v my-postgres-data:/var/lib/postgresql/data -v my-postgres-backup:/var/lib/postgresql/backup -d postgres
-
+----------------------------------------------------------------------------------------------------------------------------------------
 Задача 2
 В БД из задачи 1:
 
@@ -32,6 +32,82 @@ id (serial primary key)
 описание таблиц (describe)
 SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
 список пользователей с правами над таблицами test_db
+
+Ответ: 
+
+test_db=# \l+
+                                                                   List of databases
+   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   |  Size   | Tablespace |                Description                 
+-----------+----------+----------+------------+------------+-----------------------+---------+------------+--------------------------------------------
+ postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |                       | 7945 kB | pg_default | default administrative connection database
+ template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +| 7801 kB | pg_default | unmodifiable empty database
+           |          |          |            |            | postgres=CTc/postgres |         |            | 
+ template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +| 7801 kB | pg_default | default template for new databases
+           |          |          |            |            | postgres=CTc/postgres |         |            | 
+ test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |                       | 8097 kB | pg_default | 
+(4 rows)
+
+
+test_db=# \d+ orders
+                                                Table "public.orders"
+ Column |  Type   | Collation | Nullable |              Default               | Storage  | Stats target | Description 
+--------+---------+-----------+----------+------------------------------------+----------+--------------+-------------
+ id     | integer |           | not null | nextval('orders_id_seq'::regclass) | plain    |              | 
+ name   | text    |           |          |                                    | extended |              | 
+ price  | integer |           |          |                                    | plain    |              | 
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "clients" CONSTRAINT "clients_bookings_fkey" FOREIGN KEY (bookings) REFERENCES orders(id)
+Access method: heap
+
+test_db=# \d+ clients
+                                                 Table "public.clients"
+  Column  |  Type   | Collation | Nullable |               Default               | Storage  | Stats target | Description 
+----------+---------+-----------+----------+-------------------------------------+----------+--------------+-------------
+ id       | integer |           | not null | nextval('clients_id_seq'::regclass) | plain    |              | 
+ lastname | text    |           |          |                                     | extended |              | 
+ country  | text    |           |          |                                     | extended |              | 
+ bookings | integer |           |          |                                     | plain    |              | 
+Indexes:
+    "clients_pkey" PRIMARY KEY, btree (id)
+    "country_index" btree (country)
+Foreign-key constraints:
+    "clients_bookings_fkey" FOREIGN KEY (bookings) REFERENCES orders(id)
+Access method: heap
+
+Список пользователей:
+
+test_db=# SELECT table_name,grantee,privilege_type FROM information_schema.table_privileges WHERE table_schema NOT IN ('information_schema','pg_catalog');
+ table_name |     grantee      | privilege_type 
+------------+------------------+----------------
+ orders     | postgres         | INSERT
+ orders     | postgres         | SELECT
+ orders     | postgres         | UPDATE
+ orders     | postgres         | DELETE
+ orders     | postgres         | TRUNCATE
+ orders     | postgres         | REFERENCES
+ orders     | postgres         | TRIGGER
+ clients    | postgres         | INSERT
+ clients    | postgres         | SELECT
+ clients    | postgres         | UPDATE
+ clients    | postgres         | DELETE
+ clients    | postgres         | TRUNCATE
+ clients    | postgres         | REFERENCES
+ clients    | postgres         | TRIGGER
+ orders     | test-simple-user | INSERT
+ orders     | test-simple-user | SELECT
+ orders     | test-simple-user | UPDATE
+ orders     | test-simple-user | DELETE
+ clients    | test-simple-user | INSERT
+ clients    | test-simple-user | SELECT
+ clients    | test-simple-user | UPDATE
+ clients    | test-simple-user | DELETE
+(22 rows)
+
+
+---------------------
+
 Задача 3
 Используя SQL синтаксис - наполните таблицы следующими тестовыми данными:
 
