@@ -143,17 +143,24 @@ INSERT 0 5
 test_db=#INSERT INTO clients (lastname,country,bookings) VALUES ('Иванов Иван Иванович','USA',NULL), ('Петров Петр Петрович','Canada',NULL), ('Иоганн Себастьян Бах','Japan',NULL), ('Ронни Джеймс Дио','Russia',NULL), ('Ritchie Blackmore','Russia',NULL);
 
 test_db=# select count(*) from orders;
+
  count 
+ 
 -------
      5
+     
 (1 row)
 
 ***********************************************************
 
 test_db=# select count(*) from clients;
+
  count 
+ 
 -------
+
      5
+     
 (1 row)
 ---------------------------------------------------------------------
 Задача 4
@@ -174,13 +181,19 @@ test_db=# select count(*) from clients;
 Ответ: 
 
 test_db=# UPDATE clients SET bookings = (SELECT id FROM orders WHERE name = 'Книга') WHERE lastname = 'Иванов Иван Иванович';
-UPDATE 1
-test_db=# UPDATE clients SET bookings = (SELECT id FROM orders WHERE name = 'Монитор') WHERE lastname = 'Петров Петр Петрович';
-UPDATE 1
-test_db=# UPDATE clients SET bookings = (SELECT id FROM orders WHERE name = 'Гитара') WHERE lastname = 'Иоганн Себастьян Бах';
+
 UPDATE 1
 
+test_db=# UPDATE clients SET bookings = (SELECT id FROM orders WHERE name = 'Монитор') WHERE lastname = 'Петров Петр Петрович';
+UPDATE 1
+
+test_db=# UPDATE clients SET bookings = (SELECT id FROM orders WHERE name = 'Гитара') WHERE lastname = 'Иоганн Себастьян Бах';
+
+UPDATE 1
+
+
 test_db=# select * from clients;
+
  id |                lastname                | country | bookings 
 ----+----------------------------------------+---------+----------
   4 | Ронни Джеймс Дио         | Russia  |         
@@ -191,6 +204,7 @@ test_db=# select * from clients;
 (5 rows)
 
 test_db=# select * from orders;
+
  id |      name      | price 
 ----+----------------+-------
   1 | Шоколад |    10
@@ -205,12 +219,34 @@ test_db=# select * from orders;
 
 Приведите получившийся результат и объясните что значат полученные значения.
 
+Ответ:
+
+test_db=# EXPLAIN select * from clients;
+
+                        QUERY PLAN      
+                        
+-----------------------------------------------------------
+
+Seq Scan on clients  (cost=0.00..18.10 rows=810 width=72)
+ 
+(1 row)
+
+В данном запросе: Seq Scan — последовательное, блок за блоком, чтение данных таблицы clients
+
+Cost - это абстрактная величина, призванное оценить затратность операции. Первое значение 0.00 — затраты на получение первой строки. Второе —18.10 — затраты на получение всех строк.
+rows — приблизительное количество возвращаемых строк при выполнении операции Seq Scan. Данное значение возвращает планировщик.
+width — средний размер одной строки в байтах.
+
 Задача 6
 Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
 
 Остановите контейнер с PostgreSQL (но не удаляйте volumes).
 
 Поднимите новый пустой контейнер с PostgreSQL.
+
+Ответ:
+
+
 
 Восстановите БД test_db в новом контейнере.
 
