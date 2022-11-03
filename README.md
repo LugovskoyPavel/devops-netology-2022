@@ -171,6 +171,35 @@ test_db=# select count(*) from clients;
 
 Подсказк - используйте директиву UPDATE.
 
+Ответ: 
+
+test_db=# UPDATE clients SET bookings = (SELECT id FROM orders WHERE name = 'Книга') WHERE lastname = 'Иванов Иван Иванович';
+UPDATE 1
+test_db=# UPDATE clients SET bookings = (SELECT id FROM orders WHERE name = 'Монитор') WHERE lastname = 'Петров Петр Петрович';
+UPDATE 1
+test_db=# UPDATE clients SET bookings = (SELECT id FROM orders WHERE name = 'Гитара') WHERE lastname = 'Иоганн Себастьян Бах';
+UPDATE 1
+
+test_db=# select * from clients;
+ id |                lastname                | country | bookings 
+----+----------------------------------------+---------+----------
+  4 | Ронни Джеймс Дио         | Russia  |         
+  5 | Ritchie Blackmore                      | Russia  |         
+  1 | Иванов Иван Иванович | USA     |        3
+  2 | Петров Петр Петрович | Canada  |        4
+  3 | Иоганн Себастьян Бах | Japan   |        5
+(5 rows)
+
+test_db=# select * from orders;
+ id |      name      | price 
+----+----------------+-------
+  1 | Шоколад |    10
+  2 | Принтер |  3000
+  3 | Книга     |   500
+  4 | Монитор |  7000
+  5 | Гитара   |  4000
+(5 rows)
+
 Задача 5
 Получите полную информацию по выполнению запроса выдачи всех пользователей из задачи 4 (используя директиву EXPLAIN).
 
