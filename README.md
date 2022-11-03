@@ -36,6 +36,7 @@ SQL-запрос для выдачи списка пользователей с 
 Ответ: 
 
 test_db=# \l+
+
                                                                    List of databases
    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   |  Size   | Tablespace |                Description                 
 -----------+----------+----------+------------+------------+-----------------------+---------+------------+--------------------------------------------
@@ -133,6 +134,28 @@ Ritchie Blackmore	Russia
 приведите в ответе:
 запросы
 результаты их выполнения.
+
+Ответ:
+
+test_db=# INSERT INTO orders (name,price) VALUES ('Шоколад',10), ('Принтер',3000), ('Книга',500), ('Монитор',7000), ('Гитара',4000);
+INSERT 0 5
+
+test_db=#INSERT INTO clients (lastname,country,bookings) VALUES ('Иванов Иван Иванович','USA',NULL), ('Петров Петр Петрович','Canada',NULL), ('Иоганн Себастьян Бах','Japan',NULL), ('Ронни Джеймс Дио','Russia',NULL), ('Ritchie Blackmore','Russia',NULL);
+
+test_db=# select count(*) from orders;
+ count 
+-------
+     5
+(1 row)
+
+***********************************************************
+
+test_db=# select count(*) from clients;
+ count 
+-------
+     5
+(1 row)
+---------------------------------------------------------------------
 Задача 4
 Часть пользователей из таблицы clients решили оформить заказы из таблицы orders.
 
