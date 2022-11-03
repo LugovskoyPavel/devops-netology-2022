@@ -39,7 +39,8 @@ SQL-запрос для выдачи списка пользователей с 
 Ответ: 
 
 test_db=# \l+
-*
+
+
                                                                    List of databases
    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   |  Size   | Tablespace |                Description                 
 -----------+----------+----------+------------+------------+-----------------------+---------+------------+--------------------------------------------
@@ -50,9 +51,10 @@ test_db=# \l+
            |          |          |            |            | postgres=CTc/postgres |         |            | 
  test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |                       | 8097 kB | pg_default | 
 (4 rows)
-*
+
 
 test_db=# \d+ orders
+
                                                 Table "public.orders"
  Column |  Type   | Collation | Nullable |              Default               | Storage  | Stats target | Description 
 --------+---------+-----------+----------+------------------------------------+----------+--------------+-------------
@@ -66,6 +68,7 @@ Referenced by:
 Access method: heap
 
 test_db=# \d+ clients
+
                                                  Table "public.clients"
   Column  |  Type   | Collation | Nullable |               Default               | Storage  | Stats target | Description 
 ----------+---------+-----------+----------+-------------------------------------+----------+--------------+-------------
@@ -73,6 +76,8 @@ test_db=# \d+ clients
  lastname | text    |           |          |                                     | extended |              | 
  country  | text    |           |          |                                     | extended |              | 
  bookings | integer |           |          |                                     | plain    |              | 
+
+
 Indexes:
     "clients_pkey" PRIMARY KEY, btree (id)
     "country_index" btree (country)
@@ -83,6 +88,8 @@ Access method: heap
 Список пользователей:
 
 test_db=# SELECT table_name,grantee,privilege_type FROM information_schema.table_privileges WHERE table_schema NOT IN ('information_schema','pg_catalog');
+
+
  table_name |     grantee      | privilege_type 
 ------------+------------------+----------------
  orders     | postgres         | INSERT
@@ -110,7 +117,7 @@ test_db=# SELECT table_name,grantee,privilege_type FROM information_schema.table
 (22 rows)
 
 
----------------------
+
 
 Задача 3
 Используя SQL синтаксис - наполните таблицы следующими тестовыми данными:
