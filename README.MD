@@ -59,7 +59,12 @@ GRANT SELECT ON test_db.* TO 'test'@'localhost';
 на MyISAM
 на InnoDB
 
-Ответ: смотри скриншот mysql5.png
+Ответ: смотри скриншот mysql5.png, 
+
+engine - движок по умолчанию для test_db смотри mysql6.png
+InnoDB - mysql7.png
+MyISAM - mysql8.png
+
 
 
 Задача 4
