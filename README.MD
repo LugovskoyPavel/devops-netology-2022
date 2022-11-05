@@ -58,7 +58,10 @@ GRANT SELECT ON test_db.* TO 'test'@'localhost';
 
 на MyISAM
 на InnoDB
+
+
 Задача 4
+
 Изучите файл my.cnf в директории /etc/mysql.
 
 Измените его согласно ТЗ (движок InnoDB):
