@@ -59,6 +59,8 @@ GRANT SELECT ON test_db.* TO 'test'@'localhost';
 на MyISAM
 на InnoDB
 
+Ответ: смотри скриншот mysql5.png
+
 
 Задача 4
 
