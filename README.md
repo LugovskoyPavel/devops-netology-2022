@@ -32,17 +32,13 @@
 
 Ответ:
 
-test_database=# SELECT attname, avg_width FROM pg_stats WHERE tablename = 'orders';
+test_database=# SELECT attname, avg_width FROM pg_stats WHERE tablename = 'orders' order by avg_width desc LIMIT 1;
 
 
 attname | avg_width 
 ---------+-----------
- id      |         4
  title   |        16
- price   |         4
-(3 rows)
-
-title - наибольшее
+(1 row)
 
 
 
