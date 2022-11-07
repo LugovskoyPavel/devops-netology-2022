@@ -48,9 +48,26 @@ attname | avg_width
 Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?
 
 Ответ:
+BEGIN;
+CREATE TABLE orders_1 (CHECK (price > 499)) INHERITS (orders);
+CREATE TABLE orders_2 (CHECK (price<=499)) INHERITS (orders);
+CREATE RULE rl1 AS ON INSERT TO orders WHERE price > 499 DO INSTEAD INSERT INTO orders_1 VALUES (NEW.*);
+CREATE RULE rl2 AS ON INSERT TO orders WHERE price<=499 DO INSTEAD INSERT INTO orders_2 VALUES (NEW.*);
+COMMIT;
+
+И два правила для добавления новых данных в таблицу orders
+
+Можно ли было изначально исключить “ручное” разбиение при проектировании таблицы orders?
+Ответ - можно, если знать, что по каккому-то столюцу таблицы записи будут распределяться равномерно. 
+Тогда можно разделить таблицы исходя по определенным диапазонам на достаточно равные подтаблицы.
 
 Задача 4
 Используя утилиту pg_dump создайте бекап БД test_database.
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца title для таблиц test_database?
 
 Ответ:
+
+postgres@25b5dcb63da7:~$ pg_dump test_database > lps_dump.sql
+
+Можно доработать бекап-файл базы данных добавив индекс или первичный ключ для title.
+  
