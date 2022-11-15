@@ -204,21 +204,58 @@ sh-4.2$ curl -X DELETE localhost:9200/ind-3?pretty
 Создайте директорию {путь до корневой директории с elasticsearch в образе}/snapshots.
 
 Используя API зарегистрируйте данную директорию как snapshot repository c именем netology_backup.
-
 Приведите в ответе запрос API и результат вызова API для создания репозитория.
-
 Создайте индекс test с 0 реплик и 1 шардом и приведите в ответе список индексов.
-
 Создайте snapshot состояния кластера elasticsearch.
-
 Приведите в ответе список файлов в директории со snapshotами.
-
 Удалите индекс test и создайте индекс test-2. Приведите в ответе список индексов.
-
 Восстановите состояние кластера elasticsearch из snapshot, созданного ранее.
-
 Приведите в ответе запрос к API восстановления и итоговый список индексов.
-
 Подсказки:
-
 возможно вам понадобится доработать elasticsearch.yml в части директивы path.repo и перезапустить elasticsearch
+
+Ответ:
+1.
+sh-4.2$ curl -XPOST localhost:9200/_snapshot/netology_backup?pretty -H 'Content-Type: application/json' -d'{"type": "fs", "settings": { "location":"/elasticsearch-7.11.1/snapshots" }}'
+{
+  "acknowledged" : true
+}
+
+2.
+sh-4.2$ curl http://localhost:9200/_snapshot/netology_backup?pretty
+{
+  "netology_backup" : {
+    "type" : "fs",
+    "settings" : {
+      "location" : "/elasticsearch-7.11.1/snapshots"
+    }
+  }
+}
+
+3.
+sh-4.2$ curl http://localhost:9200/test?pretty
+{
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "index_not_found_exception",
+        "reason" : "no such index [test]",
+        "resource.type" : "index_or_alias",
+        "resource.id" : "test",
+        "index_uuid" : "_na_",
+        "index" : "test"
+      }
+    ],
+    "type" : "index_not_found_exception",
+    "reason" : "no such index [test]",
+    "resource.type" : "index_or_alias",
+    "resource.id" : "test",
+    "index_uuid" : "_na_",
+    "index" : "test"
+  },
+  "status" : 404
+}
+
+4.
+
+
