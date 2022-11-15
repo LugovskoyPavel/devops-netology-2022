@@ -102,6 +102,54 @@ ind-3	2	4
 
 При проектировании кластера elasticsearch нужно корректно рассчитывать количество реплик и шард, иначе возможна потеря данных индексов, вплоть до полной, при деградации системы.
 
+Ответ:
+
+sh-4.2$ curl -X GET 'localhost:9200/_cat/indices?v'
+health status index uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   ind-1 7S6yM8S1RLe3NWzayiWycw   1   0          0            0       208b           208b
+yellow open   ind-3 Dqshc35bQGer5ZXgyexZ9Q   4   2          0            0       832b           832b
+yellow open   ind-2 NVvFJjJfRrCC_JQW-S2Y3A   2   1          0            0       416b           416b
+
+
+Состояние кластера
+
+sh-4.2$ curl  http://localhost:9200/_cluster/health?pretty
+{
+  "cluster_name" : "netology_test",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 7,
+  "active_shards" : 7,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 10,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 41.17647058823529
+}
+
+Статус yellow - из за этой строчки "delayed_unassigned_shards" : 0,
+
+Удаление индексов:
+
+sh-4.2$ curl -X DELETE localhost:9200/ind-1?pretty
+{
+  "acknowledged" : true
+}
+sh-4.2$ curl -X DELETE localhost:9200/ind-2?pretty
+{
+  "acknowledged" : true
+}
+sh-4.2$ curl -X DELETE localhost:9200/ind-3?pretty
+{
+  "acknowledged" : true
+}
+
+
 Задача 3
 В данном задании вы научитесь:
 
