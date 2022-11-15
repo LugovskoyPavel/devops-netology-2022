@@ -87,23 +87,40 @@ CMD ["/elasticsearch-7.11.1/bin/elasticsearch"]
 
 
 sh-4.2$ curl -X GET localhost:9200
+
 {
   "name" : "d983826adf51",
+  
   "cluster_name" : "netology_test",
+  
   "cluster_uuid" : "-dEU81irS6KDFX7XiFkDyw",
+  
   "version" : {
+  
     "number" : "7.11.1",
+    
     "build_flavor" : "default",
+    
     "build_type" : "tar",
+    
     "build_hash" : "ff17057114c2199c9c1bbecc727003a907c0db7a",
+    
     "build_date" : "2021-02-15T13:44:09.394032Z",
+    
     "build_snapshot" : false,
+    
     "lucene_version" : "8.7.0",
+    
     "minimum_wire_compatibility_version" : "6.8.0",
+    
     "minimum_index_compatibility_version" : "6.0.0-beta1"
+    
   },
+  
   "tagline" : "You Know, for Search"
+  
 }
+
 sh-4.2$
 
 
