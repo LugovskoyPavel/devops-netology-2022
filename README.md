@@ -215,47 +215,40 @@ sh-4.2$ curl -X DELETE localhost:9200/ind-3?pretty
 возможно вам понадобится доработать elasticsearch.yml в части директивы path.repo и перезапустить elasticsearch
 
 Ответ:
-1.
-sh-4.2$ curl -XPOST localhost:9200/_snapshot/netology_backup?pretty -H 'Content-Type: application/json' -d'{"type": "fs", "settings": { "location":"/elasticsearch-7.11.1/snapshots" }}'
+1. Используя API зарегистрируйте данную директорию как snapshot repository c именем netology_backup.
+
+sh-4.2$ curl -X PUT -u undefined:$ESPASS "localhost:9200/_snapshot/netology_backup?pretty" -H 'Content-Type: application/json' -d'
+> {
+>   "type": "fs",
+>   "settings": {
+>     "location": "snapshots"
+>   }
+> }
+> '
 {
   "acknowledged" : true
 }
 
-2.
-sh-4.2$ curl http://localhost:9200/_snapshot/netology_backup?pretty
-{
-  "netology_backup" : {
-    "type" : "fs",
-    "settings" : {
-      "location" : "/elasticsearch-7.11.1/snapshots"
-    }
-  }
-}
+2. Создайте индекс test с 0 реплик и 1 шардом и приведите в ответе список индексов.
+sh-4.2$ curl -X GET -u undefined:$ESPASS "localhost:9200/_cat/indices/*?v=true&s=index&pretty"
+health status index uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   test  O4S5cQL2Qdi9keMi6Vtw3g   1   0          0            0       208b           208b
 
-3.
-sh-4.2$ curl http://localhost:9200/test?pretty
-{
-  "error" : {
-    "root_cause" : [
-      {
-        "type" : "index_not_found_exception",
-        "reason" : "no such index [test]",
-        "resource.type" : "index_or_alias",
-        "resource.id" : "test",
-        "index_uuid" : "_na_",
-        "index" : "test"
-      }
-    ],
-    "type" : "index_not_found_exception",
-    "reason" : "no such index [test]",
-    "resource.type" : "index_or_alias",
-    "resource.id" : "test",
-    "index_uuid" : "_na_",
-    "index" : "test"
-  },
-  "status" : 404
-}
+3. Создайте snapshot состояния кластера elasticsearch.
+sh-4.2$ ls -l elasticsearch-7.11.1/snapshots/
+total 16
+drwxr-xr-x 2 elasticsearch elasticsearch 4096 Nov 16 08:30 snapshots
 
-4.
+4. Удалите индекс test и создайте индекс test-2. Приведите в ответе список индексов.
+sh-4.2$ curl -X GET -u undefined:$ESPASS "localhost:9200/_cat/indices/*?v=true&s=index&pretty"
+health status index  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   test-2 WZcZfSIATieFpbWjTRd0nQ   1   0          0            0       208b           208b
 
+5. Восстановите состояние кластера elasticsearch из snapshot, созданного ранее.
 
+sh-4.2$ curl -X POST -u undefined:$ESPASS "localhost:9200/_snapshot/netology_backup/snapshot_lps/_restore?pretty"
+
+sh-4.2$ curl -X GET -u undefined:$ESPASS "localhost:9200/_cat/indices/*?v=true&s=index&pretty"
+health status index  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   test   O4S5cQL2Qdi9keMi6Vtw3g   1   0          0            0       208b           208b
+green  open   test-2 WZcZfSIATieFpbWjTRd0nQ   1   0          0            0       208b           208b
