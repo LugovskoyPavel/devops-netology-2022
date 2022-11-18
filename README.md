@@ -83,4 +83,16 @@ on linux_amd64
 
 ОТВЕТ:
 
+lugy@lugy-virtual-machine:~/Ternew$ terraform11 --version
+
+Terraform v1.3.5
+
+on linux_amd64
+
+lugy@lugy-virtual-machine:~/Ternew$ terraform version
+
+Terraform v1.3.4
+
+on linux_amd64
+
 
