@@ -1,9 +1,41 @@
 Доработка ДЗ "6.5. Elasticsearch"
 
-Ответ:
+Ответ на замечание:
 
+1)
 
+FROM centos:7
+LABEL ElasticSearch Lab 6.5 \
+    (c)Aleksandr Lozhkin
+ENV PATH=/usr/lib:/usr/lib/jvm/jre-11/bin:$PATH
 
+RUN yum install java-11-openjdk -y && yum install wget -y \
+&& wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.11.1-linux-x86_64.tar.gz \
+&& wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.11.1-linux-x86_64.tar.gz.sha512 \ 
+&& yum install perl-Digest-SHA -y \
+&& shasum -a 512 -c elasticsearch-7.11.1-linux-x86_64.tar.gz.sha512 \ 
+    && tar -xzf elasticsearch-7.11.1-linux-x86_64.tar.gz \
+    && yum upgrade -y
+    
+ADD elasticsearch.yml /elasticsearch-7.11.1/config/
+ENV JAVA_HOME=/elasticsearch-7.11.1/jdk/
+ENV ES_HOME=/elasticsearch-7.11.1
+RUN groupadd elasticsearch \
+    && useradd -g elasticsearch elasticsearch
+    
+RUN mkdir /var/lib/logs \
+    && chown elasticsearch:elasticsearch /var/lib/logs \
+    && mkdir /var/lib/data \
+    && chown elasticsearch:elasticsearch /var/lib/data \
+    && chown -R elasticsearch:elasticsearch /elasticsearch-7.11.1/
+RUN mkdir /elasticsearch-7.11.1/snapshots &&\
+    chown elasticsearch:elasticsearch /elasticsearch-7.11.1/snapshots
+    
+USER elasticsearch
+CMD ["/usr/sbin/init"]
+CMD ["/elasticsearch-7.11.1/bin/elasticsearch"]
+
+2)
 
 Yellow - в одном или нескольких индексах отсутствуют («нераспределенные») сегменты реплик. 
 Индекс все еще работает и может полностью индексировать, искать и обслуживать данные, но надежность хранения находиться под угрозой.
