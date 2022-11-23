@@ -8,12 +8,11 @@ package main
 import "fmt"
 
 func main() {
+
     fmt.Print("Enter a number: ")
     var input float64
     fmt.Scanf("%f", &input)
-
     output := input * 2
-
     fmt.Println(output)    
 }
 
@@ -24,6 +23,7 @@ package main
 import "fmt"
 
 func main() {
+
     fmt.Print("Enter a meters: ")
     var input float64
     fmt.Scanf("%f", &input)
@@ -45,13 +45,17 @@ import "fmt"
 
 import "sort"
 func main() {
+
     x := []int{48,96,86,68,57,82,63,70,37,34,83,27,19,97,9,17,}
     sort.Ints(x)
     fmt.Println(x[0])
+    
 }
 
 
 Напишите программу, которая выводит числа от 1 до 100, которые делятся на 3. То есть (3, 6, 9, …).
+
+ОТВЕТ:
 
 В виде решения ссылку на код или сам код.
 
