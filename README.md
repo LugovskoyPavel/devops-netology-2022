@@ -18,14 +18,13 @@ func main() {
 
 ОТВЕТ:
 
-package main
+package ft
 
 import "fmt"
 
-func main() {
+func ft(input float64) {
 
     fmt.Print("Enter a meters: ")
-    var input float64
     fmt.Scanf("%f", &input)
     output := input * 0.3048
     fmt.Println("Value in ft",output)    
@@ -52,6 +51,7 @@ func main() {
     
 }
 
+--------------------------------------------------------------------------
 
 Напишите программу, которая выводит числа от 1 до 100, которые делятся на 3. То есть (3, 6, 9, …).
 
@@ -75,7 +75,7 @@ func main() {
   
 }
 
-
+-------------------------------------------------------------------------
 
 В виде решения ссылку на код или сам код.
 
