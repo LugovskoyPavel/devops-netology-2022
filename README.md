@@ -82,6 +82,40 @@ func main() {
 Задача 4. Протестировать код (не обязательно).
 Создайте тесты для функций из предыдущего задания.
 
+Тест для первого примера
+
+сначала немного изменил сам пример
+
+ackage ft
+
+import "fmt"
+
+func Mettoft(input float64) (float64) {
+   
+   fmt.Print("Enter a meters: ")
+    fmt.Scanf("%f", &input)
+    output: = input * 0.3048
+    fmt.Println("Value in ft",output) 
+    return input * 0.3048
+}
+
+
+Потом написал тест 
+
+package ft
+
+import "testing"
+
+func Testft(t *testing.T) {
+    
+    res := 3.048
+     dat := Mettoft(10)
+	if dat != res {
+        t.Fatal("Error!!!!!")
+	}
+
+}
+
 
 
 
