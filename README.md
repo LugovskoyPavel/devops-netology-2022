@@ -33,7 +33,7 @@
 
 Вывод команды terraform workspace list.
 
-#Ответ
+# Ответ
 ''
 lugy@lugy-virtual-machine:~/Terex$ sudo terraform workspace list
 default
@@ -43,6 +43,6 @@ stage_lps
 
 Вывод команды terraform plan для воркспейса prod.
 
-#Ответ:
+# Ответ:
 
 
