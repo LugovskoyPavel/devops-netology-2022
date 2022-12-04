@@ -31,9 +31,7 @@
 При желании поэкспериментируйте с другими параметрами и рессурсами.
 В виде результата работы пришлите:
 
-Вывод команды terraform workspace list.
-
-# Ответ
+# Ответ Вывод команды terraform workspace list.
 ```bush
 lugy@lugy-virtual-machine:~/Terex$ sudo terraform workspace list
 default
@@ -41,8 +39,6 @@ default
 stage_lps
 ```
 
-Вывод команды terraform plan для воркспейса prod.
-
-# Ответ:
+# Ответ вывод команды terraform plan для воркспейса prod.
 
 
