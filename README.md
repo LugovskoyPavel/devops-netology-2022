@@ -40,5 +40,12 @@ stage_lps
 ```
 
 # Ответ вывод команды terraform plan для воркспейса prod.
+```bush
+platform_id = local.web_instance_type_map[terraform.workspace]
+ hostname = format("count-%03d", count.index + 1)
+ description = "test vm for netology"
+ count = local.web_instance_count_map[terraform.workspace]
+```
+
 
 
