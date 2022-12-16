@@ -1,4 +1,4 @@
-#Основная часть
+# Основная часть
 1. Попробуйте запустить playbook на окружении из test.yml, зафиксируйте какое значение имеет факт some_fact для указанного хоста при выполнении playbook'a.
 ```
 lugy@lugy-virtual-machine:~/ansibdir/mnt-homeworks/08-ansible-01-base/playbook$ ansible-playbook -i inventory/test.yml site.yml
