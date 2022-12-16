@@ -18,9 +18,10 @@ ok: [localhost] => { "msg": 12 }
 
 PLAY RECAP ************************************************************************************************************************************************************************** 
 localhost : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
-
-Найдите файл с переменными (group_vars) в котором задаётся найденное в первом пункте значение и поменяйте его на 'all default fact'.
-ugy@lugy-virtual-machine:~/ansibdir/mnt-homeworks/08-ansible-01-base/playbook$ ansible-playbook -i inventory/test.yml site.yml
+```
+2. Найдите файл с переменными (group_vars) в котором задаётся найденное в первом пункте значение и поменяйте его на 'all default fact'.
+```
+lugy@lugy-virtual-machine:~/ansibdir/mnt-homeworks/08-ansible-01-base/playbook$ ansible-playbook -i inventory/test.yml site.yml
 
 PLAY [Print os facts] ***************************************************************************************************************************************************************
 
@@ -35,7 +36,7 @@ ok: [localhost] => { "msg": "all default fact" }
 PLAY RECAP ************************************************************************************************************************************************************************** 
 localhost : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
-2. Воспользуйтесь подготовленным (используется docker) или создайте собственное окружение для проведения дальнейших испытаний.
+3. Воспользуйтесь подготовленным (используется docker) или создайте собственное окружение для проведения дальнейших испытаний.
 
 Поставлен образ Centos7
 
@@ -58,11 +59,11 @@ PLAY RECAP *********************************************************************
 centos7 : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ubuntu : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
-3. Добавьте факты в group_vars каждой из групп хостов так, чтобы для some_fact получились следующие значения: для deb - 'deb default fact', для el - 'el default fact'.
+4. Добавьте факты в group_vars каждой из групп хостов так, чтобы для some_fact получились следующие значения: для deb - 'deb default fact', для el - 'el default fact'.
 
 Выполнено
 
-4. Повторите запуск playbook на окружении prod.yml. Убедитесь, что выдаются корректные значения для всех хостов.
+5. Повторите запуск playbook на окружении prod.yml. Убедитесь, что выдаются корректные значения для всех хостов.
 ```
 lugy@lugy-virtual-machine:~/ansibdir/mnt-homeworks/08-ansible-01-base/playbook$ sudo ansible-playbook -i inventory/prod.yml site.yml
 
@@ -81,7 +82,7 @@ PLAY RECAP *********************************************************************
 centos7 : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ubuntu : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
-5. При помощи ansible-vault зашифруйте факты в group_vars/deb и group_vars/el с паролем netology.
+6. При помощи ansible-vault зашифруйте факты в group_vars/deb и group_vars/el с паролем netology.
 ```
 lugy@lugy-virtual-machine:~/ansibdir/mnt-homeworks/08-ansible-01-base/playbook$ sudo ansible-vault encrypt group_vars/deb/examp.yml
 
@@ -100,7 +101,7 @@ Confirm New Vault password:
 Encryption successful
 ```
 
-6. Запустите playbook на окружении prod.yml. При запуске ansible должен запросить у вас пароль. Убедитесь в работоспособности.
+7. Запустите playbook на окружении prod.yml. При запуске ansible должен запросить у вас пароль. Убедитесь в работоспособности.
 ```
 lugy@lugy-virtual-machine:~/ansibdir/mnt-homeworks/08-ansible-01-base/playbook$ sudo ansible-playbook -i inventory/prod.yml site.yml
 
@@ -121,14 +122,14 @@ PLAY RECAP *********************************************************************
 centos7 : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ubuntu : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
-7. Посмотрите при помощи ansible-doc список плагинов для подключения. Выберите подходящий для работы на control node.
+8. Посмотрите при помощи ansible-doc список плагинов для подключения. Выберите подходящий для работы на control node.
 
 Выполнено. Нужен модуль для подключния localhost на Ubuntu
 
-8. В prod.yml добавьте новую группу хостов с именем local, в ней разместите localhost с необходимым типом подключения.
+9. В prod.yml добавьте новую группу хостов с именем local, в ней разместите localhost с необходимым типом подключения.
 el: hosts: centos7: ansible_connection: docker deb: hosts: ubuntu: ansible_connection: docker local: hosts: localhost: ansible_connection: local
 
-9. Запустите playbook на окружении prod.yml. При запуске ansible должен запросить у вас пароль. Убедитесь что факты some_fact для каждого из хостов определены из верных group_vars.
+10. Запустите playbook на окружении prod.yml. При запуске ansible должен запросить у вас пароль. Убедитесь что факты some_fact для каждого из хостов определены из верных group_vars.
 ```
 lugy@lugy-virtual-machine:~/ansibdir/mnt-homeworks/08-ansible-01-base/playbook$ sudo ansible-playbook -i inventory/prod.yml site.yml
 
@@ -150,4 +151,4 @@ centos7 : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 localhost : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ubuntu : ok=3 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
-10. Заполните README.md ответами на вопросы. Сделайте git push в ветку master. В ответе отправьте ссылку на ваш открытый репозиторий с изменённым playbook и заполненным README.md.
+11. Заполните README.md ответами на вопросы. Сделайте git push в ветку master. В ответе отправьте ссылку на ваш открытый репозиторий с изменённым playbook и заполненным README.md.
