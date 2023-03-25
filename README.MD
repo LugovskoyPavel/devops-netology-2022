@@ -70,6 +70,10 @@ Pull-модель
 
 P.S.: если при запуске некоторые контейнеры будут падать с ошибкой - проставьте им режим `Z`, например
 `./data:/var/lib:Z`
+
+Ответ:![Screenshot_1](https://user-images.githubusercontent.com/104651372/227712762-7c20e46f-b5c5-4fa6-a241-2aeaae6c0da3.png)
+
+
 #
 8. Перейдите в веб-интерфейс Chronograf (`http://localhost:8888`) и откройте вкладку `Data explorer`.
 
