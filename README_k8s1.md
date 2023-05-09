@@ -14,7 +14,9 @@
 
 Ответ: MicroK8 установлен на машину под управлением Windows. Установка прошла без сбоев. dashboard сгенерирован.
 
+![k8s1](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/64808407-662a-4493-883d-d44d7296e88d)
 
+![k8s2](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/9380a1d1-1d4b-402f-a3f2-15091b4b09cd)
 
 ------
 
@@ -22,3 +24,17 @@
 1. Установить на локальную машину kubectl.
 2. Настроить локально подключение к кластеру.
 3. Подключиться к дашборду с помощью port-forward.
+
+Ответ: kubectl установлен. Пришлось немного помучиться, потому что конфигурационный файл был настороен на старые подключения к k8s. пришлось переписать.
+
+Dashboard создан и подключение произведено
+
+Последовательность команд:
+
+1. kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+2. kubectl proxy
+
+3. kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:443
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/6f53d345-f88f-4b43-bd81-129f6dea74a5)
