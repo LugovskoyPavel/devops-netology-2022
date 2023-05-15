@@ -12,7 +12,8 @@
 
 1+2. Создан yaml файл c pod с использованием указанного образа:
 
-'''apiVersion: v1
+```
+apiVersion: v1
 kind: Pod
 metadata:
   name: hello-world
@@ -21,15 +22,18 @@ spec:
   - name: hello-world
     image: gcr.io/kubernetes-e2e-test-images/echoserver:2.2
     ports:
-    - containerPort: 85'''
+    - containerPort: 85
+ ```
 
 3. Произведено подключение к pod
 
-'''PS C:\Users\lugy1\.kube> kubectl port-forward hello-world 85:8080
+```
+PS C:\Users\lugy1\.kube> kubectl port-forward hello-world 85:8080
 Forwarding from 127.0.0.1:85 -> 8080
 Forwarding from [::1]:85 -> 8080
 Handling connection for 85
-Handling connection for 85'''
+Handling connection for 85
+```
 
 ![k8s_pod](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/6d36cf42-d234-45e1-a030-b9c07a8cac2e)
 
