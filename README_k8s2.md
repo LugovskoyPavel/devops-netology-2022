@@ -10,7 +10,7 @@
 
 Ответ:
 
-1+2. Создан yaml файл c pod с использованием указанного образа:
+1. Создан yaml файл c pod с использованием указанного образа:
 
 ```
 apiVersion: v1
@@ -24,8 +24,15 @@ spec:
     ports:
     - containerPort: 85
  ```
+2. Вывод pod (уже с pod из второго задания)
+```
+PS C:\Users\lugy1\.kube> kubectl get pods   
+NAME           READY   STATUS    RESTARTS   AGE
+hello-world    1/1     Running   0          58m
+netology-web   1/1     Running   0          39m
+```
 
-3. Произведено подключение к pod
+4. Произведено подключение к pod
 
 ```
 PS C:\Users\lugy1\.kube> kubectl port-forward hello-world 85:8080
