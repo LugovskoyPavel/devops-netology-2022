@@ -53,5 +53,24 @@ Handling connection for 85
 3. Создать Service с именем netology-svc и подключить к netology-web.
 4. Подключиться локально к Service с помощью `kubectl port-forward` и вывести значение (curl или в браузере).
 
+Ответ:
+
+1+2. Создан  pod с использованием указанного образа:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: netology-web
+spec:
+  containers:
+  - name: netology-web
+    image: gcr.io/kubernetes-e2e-test-images/echoserver:2.2
+    ports:
+    - containerPort: 86
+```
+3.
+
+4. 
+
 ------
 
