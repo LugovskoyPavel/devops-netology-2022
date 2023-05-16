@@ -61,16 +61,82 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: netology-web
+  labels:
+    app.kubernetes.io/name: mynetology
 spec:
   containers:
   - name: netology-web
     image: gcr.io/kubernetes-e2e-test-images/echoserver:2.2
     ports:
-    - containerPort: 86
+    - containerPort: 8886
 ```
-3.
+3. Создан сервис netology-svc и подключён к netology-web
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: netology-svc
+spec:
+  selector:
+    app.kubernetes.io/name: mynetology
+  ports:
+    - protocol: TCP
+      port: 8886
+      targetPort: 8080
+```
+```
+PS C:\Users\lugy1\.kube> kubectl describe service netology-svc
+Name:              netology-svc
+Namespace:         default
+Labels:            <none>
+Annotations:       <none>
+Selector:          app.kubernetes.io/name=mynetology
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.152.183.23
+IPs:               10.152.183.23
+Port:              <unset>  8886/TCP
+TargetPort:        8080/TCP
+Endpoints:         10.1.254.125:8080
+Session Affinity:  None
+Events:            <none>
+```
 
-4. 
+4. Произведено подключение к services. пришлось чуток помучиться с пониманием port-forward, но в итоге вроде получилось.
+```
+PS C:\Users\lugy1\.kube> kubectl port-forward service/netology-svc 8886:8886
+Forwarding from 127.0.0.1:8886 -> 8080
+Forwarding from [::1]:8886 -> 8080
+Handling connection for 8886
+```
+```
+PS C:\Users\lugy1\.kube> curl http://localhost:8886
 
+Hostname: netology-web
+
+Pod Information:
+        -no pod information available-
+
+Server values:
+        server_version=nginx: 1.12.2 - lua: 10010
+
+Request Information:
+        client_address=127.0.0.1
+        method=GET
+        real path=/
+        query=
+        request_version=1.1
+        request_scheme=http
+        request_uri=http://localhost:8080/
+
+Request Headers:
+        accept=*/*
+        host=localhost:8886
+        user-agent=curl/8.0.1
+
+Request Body:
+        -no body in request-
+```
 ------
 
