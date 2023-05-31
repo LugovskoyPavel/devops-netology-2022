@@ -10,7 +10,7 @@
 
 Ответ:
 1. Создал deployment из двух контейнеров
-
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,7 +54,21 @@ spec:
           runAsUser: 0
           capabilities:
             add: ["NET_ADMIN"]
-
+```
+2. Изменил количество pod. Их сначала было два, потом стал один
+```
+PS C:\Users\lugy1\.kube> kubectl get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-7776f4c7f4-2gjsx   1/1     Running   0          2m27s
+nginx-deployment-7776f4c7f4-s9rnc   1/1     Running   0          2m27s
+```
+```
+PS C:\Users\lugy1\.kube> kubectl apply -f dep_ng.yml
+deployment.apps/nginx-deployment configured
+PS C:\Users\lugy1\.kube> kubectl get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-7776f4c7f4-2gjsx   1/1     Running   0          5m43s
+```
 ------
 
 ### Задание 2. Создать Deployment и обеспечить старт основного контейнера при выполнении условий
