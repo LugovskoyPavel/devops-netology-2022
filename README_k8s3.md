@@ -179,7 +179,71 @@ Or:
 4. Продемонстрировать состояние пода до и после запуска сервиса.
 
 Ответ:
+1. Deployment создан
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 8080
+      initContainers:
+      - name: init-myservice
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nslookup net-ng; do echo waiting for net-ng; sleep 2; done;']
+```
 
+2. Pod не стартует
+```
+PS C:\Users\lugy1\.kube> kubectl apply -f dep_ng2.yml 
+deployment.apps/nginx-deployment created
+PS C:\Users\lugy1\.kube> kubectl get pods            
+NAME                                READY   STATUS     RESTARTS   AGE
+nginx-deployment-84877b4bb5-4vvmr   0/1     Init:0/1   0          2s
+```
+3. Создал сервис
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: net-ng
+spec:
+  selector:
+    app.kubernetes.io/name: nginx-deployment
+  ports:
+    - protocol: TCP
+      port: 8886
+      targetPort: 8080
+```
 
+4. После запуска сервиса стартовал и pod
+```
+PS C:\Users\lugy1\.kube> kubectl apply -f dep_ng2.yml 
+deployment.apps/nginx-deployment created
+PS C:\Users\lugy1\.kube> kubectl get pods            
+NAME                                READY   STATUS     RESTARTS   AGE
+nginx-deployment-84877b4bb5-4vvmr   0/1     Init:0/1   0          2s
+PS C:\Users\lugy1\.kube> kubectl apply -f serv_ng.yaml
+service/net-ng created
+PS C:\Users\lugy1\.kube> kubectl get pods
+NAME                                READY   STATUS     RESTARTS   AGE
+nginx-deployment-84877b4bb5-4vvmr   0/1     Init:0/1   0          42s
+PS C:\Users\lugy1\.kube> kubectl get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-84877b4bb5-4vvmr   1/1     Running   0          54s
+```
 ------
 
