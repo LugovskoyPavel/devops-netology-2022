@@ -58,8 +58,68 @@ spec:
           capabilities:
             add: ["NET_ADMIN"]
 ```
-2. Sercices создан
+2. Services создан
 
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-nginx
+spec:
+  selector:
+    app.kubernetes.io/name: nginx-deployment
+  ports:
+    - name: myng
+      protocol: TCP
+      port: 9001
+      targetPort: 8080
+    - name: mymoolt
+      protocol: TCP
+      port: 9002
+      targetPort: 1180
+```
+3. Создать отдельный Pod с приложением multitool
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multitool-deployment
+spec:
+  selector:
+    matchLabels:
+      app: multitool
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: multitool
+    spec:
+      containers:
+      - name: network-multitool
+        image: praqma/network-multitool
+        env:
+        - name: HTTP_PORT
+          value: "1180"
+        - name: HTTPS_PORT
+          value: "11443"
+        ports:
+        - containerPort: 1180
+          name: http-port
+        - containerPort: 11443
+          name: https-port
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
+        securityContext:
+          runAsUser: 0
+          capabilities:
+            add: ["NET_ADMIN"]
+```
+4. 
 
 
 ------
