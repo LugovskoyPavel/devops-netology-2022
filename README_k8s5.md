@@ -128,6 +128,7 @@ Commercial support is available at
 </html>
 ```
 5. Скрин
+
 ![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/b8a5aec0-ec6e-4d2e-bd44-f64b8094e65f)
 
 
@@ -139,5 +140,65 @@ Commercial support is available at
 2. Создать Ingress, обеспечивающий доступ снаружи по IP-адресу кластера MicroK8S так, чтобы при запросе только по адресу открывался _frontend_ а при добавлении /api - _backend_.
 3. Продемонстрировать доступ с помощью браузера или `curl` с локального компьютера.
 4. Предоставить манифесты и скриншоты или вывод команды п.2.
+
+Ответ:
+1. Контроллер включен
+```
+microk8s enable ingress
+Infer repository core for addon ingress
+Enabling Ingress
+ingressclass.networking.k8s.io/public created
+ingressclass.networking.k8s.io/nginx created
+namespace/ingress created
+serviceaccount/nginx-ingress-microk8s-serviceaccount created
+clusterrole.rbac.authorization.k8s.io/nginx-ingress-microk8s-clusterrole created
+role.rbac.authorization.k8s.io/nginx-ingress-microk8s-role created
+clusterrolebinding.rbac.authorization.k8s.io/nginx-ingress-microk8s created
+rolebinding.rbac.authorization.k8s.io/nginx-ingress-microk8s created       
+configmap/nginx-load-balancer-microk8s-conf created
+configmap/nginx-ingress-tcp-microk8s-conf created
+configmap/nginx-ingress-udp-microk8s-conf created
+daemonset.apps/nginx-ingress-microk8s-controller created
+Ingress is enabled
+```
+
+2. Ingress создан
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lugnginx
+  annotations: 
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx-ingress
+  rules:
+  - http:
+      paths:
+      - path: /test
+        pathType: Prefix
+        backend:
+          service:
+            name: servfront
+            port:
+              number: 30080
+
+```
+3. Доступ получен
+```
+bash-5.1# curl -kL http://localhost:80/test
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.18.0</center>
+</body>
+</html>
+bash-5.1#
+```
+4. Скрин
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/e9c51979-083e-4fec-8ef6-efcbec9691ae)
+
 
 ------
