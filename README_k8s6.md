@@ -88,7 +88,7 @@ Success!
 ```
 4. Скрин
 
-
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/8dfc7139-8d0f-47d9-a583-7a6f2f8d207a)
 
 ------
 ### Задание 2
@@ -105,7 +105,7 @@ Success!
 ------
 Ответ:
 1.
-2.
+2. Чтение файла `/var/log/syslog` кластера MicroK8S
 3.
 4.
 
