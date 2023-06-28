@@ -132,9 +132,27 @@ No resources found in default namespace.
 ```
 ![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/e1ffa306-0232-4be3-9d39-21aaed0d57fa)
 
+PV сохранился, поскольку не указана политика, предусматривающая, например, удаление, но находится в состоянии Released. 
 
-5. 
+5. Файл сохранился на ноде
 
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/74be2e3b-f2f1-4725-98eb-cd610fce5290)
+
+А теперь удалим PV
+
+```
+PS C:\Users\lugy1\.kube> kubectl get pv 
+NAME    CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS     CLAIM             STORAGECLASS   REASON   AGE
+pvlug   5Gi        RWO            Retain           Released   default/lugpvc2                           22m 
+PS C:\Users\lugy1\.kube> kubectl get pv
+No resources found
+```
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/e2f8f0cd-2470-4e09-83d7-353a67cff3f6)
+
+Посмотрим остался ли файл на ноде. Файл остался. Так как ReclaimPolicy: Retain сохраняет файлы даже после удаления pv
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/465197b0-38d7-48f0-aaae-8111ff648193)
 
 
 ------
