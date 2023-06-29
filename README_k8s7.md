@@ -171,10 +171,80 @@ No resources found
 ------
 
 Ответ:
-1. NFS-сервер включен
+1. NFS-сервер включен и настроен по инструкции
 
-2.
+https://discuss.kubernetes.io/t/use-nfs-for-persistent-volumes/19035
 
-3.
+2. Deployment создан
 
-4.
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mult-pvcnfs
+  name: mult-pvcnfs
+spec:
+  selector:
+    matchLabels:
+      app: mult-pvcnfs
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: mult-pvcnfs
+    spec:
+      containers:
+      - name: multlugpvnfs
+        image: praqma/network-multitool
+        volumeMounts:
+        - name: pvlugnfs
+          mountPath: /input
+        env:
+        - name: HTTP_PORT
+          value: "80"
+        - name: HTTPS_PORT
+          value: "11443"
+        ports:
+        - containerPort: 1180 
+          name: http-port
+        - containerPort: 11443
+          name: https-port
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
+        securityContext:
+          runAsUser: 0
+          capabilities:
+            add: ["NET_ADMIN"]
+      volumes:
+      - name: pvlugnfs
+        persistentVolumeClaim:
+          claimName: my-pvc
+```
+PVC
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  storageClassName: nfi-csi
+  accessModes: [ReadWriteMany]
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+3. Чтение файла из кластера
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/244feb46-0811-405b-a11a-fa89b2060c30)
+
+4. Запись в файл
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/2de5abc2-88ea-4107-9670-c24d30423125)
