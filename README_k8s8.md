@@ -129,7 +129,38 @@ spec:
 
 ------
 Ответ:
-1.
+1. Deployment приложения создан
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: lugnginx
+  name: lugnginx
+spec:
+  selector:
+    matchLabels:
+      app: lugnginx
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: lugnginx
+    spec:
+      containers:
+      - name: lugnginx
+        image: nginx:1.14.2
+        volumeMounts:
+        - name: foo2
+          mountPath: /usr/share/nginx/html/
+        ports:
+        - containerPort: 80        
+      volumes:      
+      - name: foo2
+        configMap:
+          name: nginx-configmap2
+```
 
 2. ConfigMap с веб-страницей создан
 
@@ -191,9 +222,90 @@ data:
     </html>
 ```
 
-3.
+3. Secret и SSL
 
-4.
+Для установки SSL воспользовался следующим сервисом для k8s https://cert-manager.io/
 
-5.
+Создал Issuer
+
+```
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned-issuer
+spec:
+  selfSigned: {}
+```
+
+Создал сертификат
+
+```
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: my-selfsigned-ca
+spec:
+  isCA: true
+  commonName: my-selfsigned-ca
+  secretName: root-secret
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+```
+
+Secret создан
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/c72283b6-8587-4f6f-91ab-ddf58a274d69)
+
+
+4. Ingress и Service создан. SSl подключен
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: servnginx
+spec:
+  selector:
+    app: lugnginx
+  ports:
+    - name: lugnginx
+      port: 80
+      targetPort: 80
+```
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: applug
+spec:
+  tls:
+  - hosts:
+    - "my-selfsigned-ca"
+    secretName: root-secret
+  rules:
+  - host: "my-selfsigned-ca"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: servnginx
+            port: 
+              number: 80
+```
+
+5. Доступ по https
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/ab22273e-30b7-46f9-8a94-f170c2a1a3f8)
+
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/c55fbafd-465e-47f6-874c-3b24b66a2470)
+
+
 ------
