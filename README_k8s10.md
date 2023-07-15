@@ -130,4 +130,60 @@ appVersion: "1.19.0"
 ------
 ### Ответ:
 
-1.
+1. Чарт установлен и успешно работает. Изменил количество реплик на 3
+
+```
+PS C:\Users\lugy1\.kube> helm upgrade lugchart-1689418058 lugchart --set replicaCount=3 
+Release "lugchart-1689418058" has been upgraded. Happy Helming!
+NAME: lugchart-1689418058
+LAST DEPLOYED: Sat Jul 15 14:15:15 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 3
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=lugchart,app.kubernetes.io/instance=lugchart-1689418058" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+```
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/a1b505be-fb4a-4ff6-bb78-f63a14cea8e4)
+
+
+2. Запуск чарт в разных неймспейсах
+
+```
+S C:\Users\lugy1\.kube> helm install lugchart --namespace app1 --create-namespace --wait --set replicaCount=3 --generate-name 
+NAME: lugchart-1689420223
+LAST DEPLOYED: Sat Jul 15 14:23:44 2023
+NAMESPACE: app1
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace app1 -l "app.kubernetes.io/name=lugchart,app.kubernetes.io/instance=lugchart-1689420223" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace app1 $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace app1 port-forward $POD_NAME 8080:$CONTAINER_PORT
+```
+```
+PS C:\Users\lugy1\.kube> helm install lugchart --namespace app2 --create-namespace --wait --generate-name      
+NAME: lugchart-1689420408
+LAST DEPLOYED: Sat Jul 15 14:26:48 2023
+NAMESPACE: app2
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace app2 -l "app.kubernetes.io/name=lugchart,app.kubernetes.io/instance=lugchart-1689420408" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace app2 $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace app2 port-forward $POD_NAME 8080:$CONTAINER_PORT
+```
+3. Скриншоты установленных чартов из lens
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/ddb2fe41-46ab-495d-b758-77d0bcc1b403)
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/33042274-7aec-4e55-bab2-32733268557d)
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/ba44b4a3-bc1d-4442-b8bc-9401e55d00dc)
