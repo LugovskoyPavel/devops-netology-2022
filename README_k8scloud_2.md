@@ -12,23 +12,24 @@
 -----
 Ответ:
 
-1. 
+1. Подготовлен кластер
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/c0d6ff9a-6828-4823-9a11-e9553658bc67)
+
+2. Установлен k8s по этой инструкции https://computingforgeeks.com/install-kubernetes-cluster-ubuntu-jammy/
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/338f0146-fe04-4470-b743-fdade1313ede)
+
+3. К кластеру добавлены ноды
+
+```
+lugy1@kubcontrol:~$ kubectl get nodes
+NAME         STATUS     ROLES           AGE     VERSION
+kubcontrol   Ready   control-plane   86m     v1.27.3
+kubworker1   Ready   <none>          54m     v1.27.3
+kubworker2   Ready   <none>          33m     v1.27.3
+kubworker3   Ready   <none>          18m     v1.27.3
+kubworker4   Ready   <none>          6m22s   v1.27.3
+```
+
 -----
-
-## Дополнительные задания (со звёздочкой)
-
-**Настоятельно рекомендуем выполнять все задания под звёздочкой.** Их выполнение поможет глубже разобраться в материале.   
-Задания под звёздочкой необязательные к выполнению и не повлияют на получение зачёта по этому домашнему заданию. 
-
-------
-### Задание 2*. Установить HA кластер
-
-1. Установить кластер в режиме HA.
-2. Использовать нечётное количество Master-node.
-3. Для cluster ip использовать keepalived или другой способ.
-
-### Правила приёма работы
-
-1. Домашняя работа оформляется в своем Git-репозитории в файле README.md. Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-2. Файл README.md должен содержать скриншоты вывода необходимых команд `kubectl get nodes`, а также скриншоты результатов.
-3. Репозиторий должен содержать тексты манифестов или ссылки на них в файле README.md.
