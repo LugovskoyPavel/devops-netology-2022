@@ -29,6 +29,10 @@
 
 ![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/e87b36d1-8728-491d-9a06-31db7503a179)
 
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/cec62aee-0bc7-4f95-a947-8401f5a902ee)
+
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/1de29737-033c-4e2c-b3d6-65381af4d816)
+
 5. После установки calico
 
 ```
