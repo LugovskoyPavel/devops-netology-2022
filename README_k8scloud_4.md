@@ -33,20 +33,79 @@ Blue-green deployment, canary release - по моим пониманиям ус�
 
 ### Ответ:
 
-1. 
+1. deployment создан
 
-## Дополнительные задания — со звёздочкой*
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-deployment2
+  name: nginx-deployment2
+spec:
+  selector:
+    matchLabels:
+      app: nginx-deployment2
+  replicas: 5 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+       maxSurge: 25%
+       maxUnavailable: 25% 
+  template:
+    metadata:
+      labels:
+        app: nginx-deployment2
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.19
+        ports:
+        - containerPort: 80
+      
+      - name: network-multitool
+        image: praqma/network-multitool
+        env:
+        - name: HTTP_PORT
+          value: "1180"
+        - name: HTTPS_PORT
+          value: "11443"
+        ports:
+        - containerPort: 1180
+          name: http-port
+        - containerPort: 11443
+          name: https-port
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
+        securityContext:
+          runAsUser: 0
+          capabilities:
+            add: ["NET_ADMIN"]
+```
+2. Версия nginx обновлена
 
-Задания дополнительные, необязательные к выполнению, они не повлияют на получение зачёта по домашнему заданию. **Но мы настоятельно рекомендуем вам выполнять все задания со звёздочкой.** Это поможет лучше разобраться в материале.   
+Было
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/4dc54b3c-f3fe-47e5-9c45-6c3a55e31fb4)
 
-### Задание 3*. Создать Canary deployment
+Стало
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/f3a4ed83-fa97-4d79-aa32-d30e07a87392)
 
-1. Создать два deployment'а приложения nginx.
-2. При помощи разных ConfigMap сделать две версии приложения — веб-страницы.
-3. С помощью ingress создать канареечный деплоймент, чтобы можно было часть трафика перебросить на разные версии приложения.
 
-### Правила приёма работы
+3. Попытка обновления до версии 1.28
 
-1. Домашняя работа оформляется в своем Git-репозитории в файле README.md. Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-2. Файл README.md должен содержать скриншоты вывода необходимых команд, а также скриншоты результатов.
-3. Репозиторий должен содержать тексты манифестов или ссылки на них в файле README.md.
+![image](https://github.com/LugovskoyPavel/devops-netology-2022/assets/104651372/d36cac2d-36b5-4d80-8cb7-ef4529bdf780)
+
+Ошибка обновления на контейнере с nginx
+
+4. Откат после обновления
+
+```
+PS C:\Users\lugy1\.kube> kubectl rollout undo deployment nginx-deployment2  
+deployment.apps/nginx-deployment2 rolled back
+```
+
